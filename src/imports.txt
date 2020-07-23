@@ -1,0 +1,13 @@
+import sys
+import codecs
+import datetime as dt
+import os
+import asyncio
+proj = os.path.dirname(os.path.abspath('manage.py'))
+sys.path.append(proj)
+os.environ["DJANGO_SETTINGS_MODULE"] = "scrapping_service.settings"
+import django
+django.setup()
+from scrapper.parsers import *
+from scrapper.models import Jobs, City, Language
+from django.db import DatabaseError

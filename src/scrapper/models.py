@@ -1,5 +1,6 @@
 from django.db import models
 from scrapper.utils import from_cyrillic_to_eng
+import jsonfield
 
 
 class City(models.Model):
@@ -55,3 +56,8 @@ class Jobs(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Error(models.Model):
+    time_stamp = models.DateField(auto_now_add=True)
+    data = jsonfield.JSONField()
