@@ -7,25 +7,17 @@
 
 {% block content %}
 
-{% for obj in object_list%}
-<div class="card my-4">
-    <h5 class="card-header"><a href="{{obj.url}}" target=" _blank">{{obj.title}}</a></h5>
-    <div class="card-body">
-        <h4>{{obj.company}}</h4>
-        <p class="card-text">{{obj.description}}</p>
-        <p>{{obj.city.name}} | {{obj.language.name}} | {{obj.time_stamp|date:"d M Y"}}</p>
+<div class="row">
+    <div class="col">
+        <h2 class="text-center my-3">
+            Сервис по сбору и рассылки вакансий
+        </h2>
     </div>
 </div>
-{% empty %}
 <div class="row">
-    <div class="col-md-6 mx-auto">
-        <p class="text-center font-weight-bold my-5"> Ничего не найдено :(</p>
-    </div>
-</div>
-{% endfor %}
-<div class="row">
-    <div class="col-md-6 mx-auto">
-        <form method="GET" action="">
+    <div class="col-md-8 mx-auto">
+        <h4 class="text-center my-4">Для просмотра вакансий заполните следующие поля или поле</h4>
+        <form method="GET" action="{% url 'list' %}">
             {{form.as_p}}
             <input type="submit" value="Submit">
         </form>

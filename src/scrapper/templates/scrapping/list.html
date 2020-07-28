@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Главная
+{% endblock title %}
+
+{% block content %}
+
+{% for obj in object_list%}
+<div class="card my-4">
+    <h5 class="card-header"><a href="{{obj.url}}" target=" _blank">{{obj.title}}</a></h5>
+    <div class="card-body">
+        <h4>{{obj.company}}</h4>
+        <p class="card-text">{{obj.description}}</p>
+        <p>{{obj.city.name}} | {{obj.language.name}} | {{obj.time_stamp|date:"d M Y"}}</p>
+    </div>
+</div>
+{% empty %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <p class="text-center font-weight-bold my-5"> Ничего не найдено :(</p>
+    </div>
+</div>
+{% endfor %}
+
+{% if object_list %}
+
+<div class="row">
+    <div class="col">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if object_list.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?city={{city}}&language={{ language }}&page=1" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% for page in object_list.paginator.page_range %}
+                <li class="page-item {% if page == object_list.number %} active {% endif %}">
+                    <a class="page-link" href="?city={{city}}&language={{ language }}&page={{page}}">{{page}}</a>
+                </li>
+                {% endfor %}
+                {% if object_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link"
+                        href="?city={{city}}&language={{ language }}&page={{ object_list.next_page_number }}"
+                        aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+
+
+
+        <!-- <div class="pagination">
+            <span class="step-links">
+                {% if object_list.has_previous %}
+                <a href="?city={{city}}&language={{language}}&page=1">&laquo; first</a>
+                <a href="?city={{city}}&language={{language}}&page={{ object_list.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+                </span>
+
+                {% if object_list.has_next %}
+                <a href="?city={{city}}&language={{language}}&page={{ object_list.next_page_number }}">next</a>
+                <a href="?city={{city}}&language={{language}}}&page={{ object_list.paginator.num_pages }}">last
+                    &raquo;</a>
+                {% endif %}
+            </span>
+        </div> -->
+    </div>
+</div>
+{% endif %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <form method="GET" action="{% url 'list' %}">
+            {{form.as_p}}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
+
+{% endblock content %}
